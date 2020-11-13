@@ -3,32 +3,18 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   parent: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: 'white',
     paddingHorizontal: 20,
+    paddingTop: 70,
   },
   title: {
-    fontSize: 34,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 50,
-    textTransform: 'uppercase',
-  },
-  item: {
-    marginBottom: 2,
-    borderBottomColor: 'black',
+    marginBottom: 30,
   },
   label: {
-    color: 'black',
-  },
-  input: {
-    color: 'black',
-  },
-  btn: {
-    marginTop: 20,
-  },
-  toast: {
-    marginVertical: 20,
-    marginHorizontal: 10,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   txtError: {
     fontSize: 12,

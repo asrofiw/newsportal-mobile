@@ -2,13 +2,15 @@ import React from 'react';
 import {Root} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
 
 // Import pages
 import WelcomeScreen from './pages/Welcome';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Home from './pages/Home';
-import {useSelector} from 'react-redux';
+
+// Import Bottom Tabs
+import BottomTabs from './BottomTabs';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +40,11 @@ const Main = () => {
           </Stack.Navigator>
         ) : (
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              options={{headerShown: false}}
+              name="BottomTabs"
+              component={BottomTabs}
+            />
           </Stack.Navigator>
         )}
       </NavigationContainer>

@@ -1,8 +1,12 @@
 const initialState = {
+  isSuccess: false,
   isLogin: false,
   isError: false,
   token: '',
   alertMsg: '',
+  isSuccessRegister: false,
+  isFailedRegister: false,
+  alertMsgRegister: '',
 };
 
 export default (state = initialState, action) => {
@@ -18,6 +22,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
+        isSuccess: false,
         alertMsg: action.payload.response.data.message,
       };
     }
@@ -25,9 +30,33 @@ export default (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.data.token,
+        isError: false,
         isLoading: false,
         isLogin: true,
-        alertMsg: 'Successfully login',
+        isSuccess: true,
+        alertMsg: action.payload.data.message,
+      };
+    }
+    case 'REGISTER_PENDING': {
+      return {
+        ...state,
+        isLoadingRegister: true,
+      };
+    }
+    case 'REGISTER_REJECTED': {
+      return {
+        ...state,
+        isLoadingRegister: false,
+        isFailedRegister: true,
+        alertMsgRegister: action.payload.response.data.message,
+      };
+    }
+    case 'REGISTER_FULFILLED': {
+      return {
+        ...state,
+        isLoadingRegister: false,
+        isSuccessRegister: true,
+        alertMsgRegister: action.payload.data.message,
       };
     }
     case 'LOGOUT_USER': {
@@ -38,9 +67,19 @@ export default (state = initialState, action) => {
         alertMsg: 'Logout Successfully',
       };
     }
+    case 'CLEAR_MESSAGE_REGISTER': {
+      return {
+        ...state,
+        isSuccessRegister: false,
+        isFailedRegister: false,
+        alertMsgRegister: '',
+      };
+    }
     case 'CLEAR_MESSAGE': {
       return {
         ...state,
+        isSuccess: false,
+        isError: false,
         alertMsg: '',
       };
     }

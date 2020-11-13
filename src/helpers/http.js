@@ -1,6 +1,6 @@
 import {default as axios} from 'axios';
 
-import {API_URL} from '@env';
+import {APP_URL} from '@env';
 
 const http = (token = null) => {
   const headers = {};
@@ -8,7 +8,7 @@ const http = (token = null) => {
     headers.Authorization = `Bearer ${token}`;
   }
   return axios.create({
-    baseURL: API_URL,
+    baseURL: APP_URL,
     headers,
   });
 };

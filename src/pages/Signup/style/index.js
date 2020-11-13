@@ -14,7 +14,7 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
   },
   item: {
-    marginBottom: 20,
+    marginBottom: 2,
     borderBottomColor: 'black',
   },
   label: {
@@ -27,6 +27,14 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   toast: {
-    margin: 20,
+    marginVertical: 20,
+    marginHorizontal: 10,
+  },
+  txtError: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 2,
+    marginBottom: 10,
+    textAlign: 'left',
   },
 });
