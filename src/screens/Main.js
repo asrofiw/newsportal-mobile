@@ -5,9 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 
 // Import pages
-import WelcomeScreen from './pages/Welcome';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
+import WelcomeScreen from './Welcome';
+import Signup from './Signup';
+import Login from './Login';
 
 // Import Bottom Tabs
 import BottomTabs from './BottomTabs';

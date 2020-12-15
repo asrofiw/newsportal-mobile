@@ -89,7 +89,7 @@ export class Profile extends Component {
                 source={
                   avatar
                     ? {uri: avatar}
-                    : require('../../assets/images/default-avatar1.png')
+                    : require('../../../assets/images/default-avatar1.png')
                 }
               />
               <View style={styles.icon}>

@@ -30,7 +30,7 @@ export class News extends Component {
         <Text style={styles.title}>{headline}</Text>
         <Image
           source={
-            image ? {uri: image} : require('../../assets/images/no_img.png')
+            image ? {uri: image} : require('../../../assets/images/no_img.png')
           }
           style={styles.img}
         />

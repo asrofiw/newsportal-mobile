@@ -3,8 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 // Import pages
-import Home from './pages/Home';
-import News from './pages/News';
+import Home from './Home';
+import News from './News';
 
 const HomeStacks = () => {
   return (

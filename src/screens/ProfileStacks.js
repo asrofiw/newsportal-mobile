@@ -3,9 +3,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 // Import pages
-import Profile from './pages/Profile';
-import EditProfile from './pages/EditProfile';
-import ChangePassword from './pages/ChangePassword';
+import Profile from './Profile';
+import EditProfile from './EditProfile';
+import ChangePassword from './ChangePassword';
 
 const ProfileStacks = () => {
   return (

@@ -35,7 +35,7 @@ export class Home extends Component {
             source={
               article.image
                 ? {uri: article.image}
-                : require('../../assets/images/no_img.png')
+                : require('../../../assets/images/no_img.png')
             }
             style={styles.img}
           />

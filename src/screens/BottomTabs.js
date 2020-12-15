@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Import Component Bottom Tabs
 import HomeStacks from './HomeStacks';
-import PostNews from './pages/PostNews';
+import PostNews from './PostNews';
 import ProfileStacks from './ProfileStacks';
 
 const Bottom = createBottomTabNavigator();
