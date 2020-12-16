@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {TouchableWithoutFeedback, Keyboard, StyleSheet} from 'react-native';
 import {
   View,
   Text,
@@ -13,10 +13,9 @@ import {
 import {Formik} from 'formik';
 import {connect} from 'react-redux';
 import * as yup from 'yup';
-import styles from './style';
 
 // import Action
-import profileAction from '../../redux/actions/profile';
+import profileAction from '../redux/actions/profile';
 
 const formSchema = yup.object({
   name: yup.string().required('name required'),
@@ -161,3 +160,28 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    paddingTop: 70,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  txtError: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 2,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+});

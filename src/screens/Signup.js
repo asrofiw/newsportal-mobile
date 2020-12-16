@@ -1,46 +1,60 @@
 import React, {Component} from 'react';
 import {Button, Input, Item, Label, Text, Toast, View} from 'native-base';
-import styles from './style';
-import {TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {TouchableWithoutFeedback, Keyboard, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
 // Import action
-import authAction from '../../redux/actions/auth';
+import authAction from '../redux/actions/auth';
 
 const formSchema = yup.object({
+  name: yup.string().required('name required'),
   email: yup.string().email('must be a valid email').required('email required'),
   password: yup.string().min(3).required('password required'),
 });
 
-export class Login extends Component {
+export class Signup extends Component {
   componentDidUpdate() {
-    const {isSuccess, isError, alertMsg} = this.props.auth;
-    if (isSuccess || isError) {
+    const {
+      isSuccessRegister,
+      isFailedRegister,
+      alertMsgRegister,
+    } = this.props.auth;
+
+    if (isSuccessRegister) {
       Toast.show({
-        text: alertMsg,
+        text: alertMsgRegister,
         buttonText: 'Ok',
         style: styles.toast,
       });
-      this.props.clearMsg();
+      this.props.navigation.navigate('Login');
+      this.props.clearMsgRegister();
+    }
+
+    if (isFailedRegister) {
+      Toast.show({
+        text: alertMsgRegister,
+        buttonText: 'Ok',
+        style: styles.toast,
+      });
     }
   }
-
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.parent}>
-          <Text style={styles.title}>Login</Text>
+          <Text style={styles.title}>Register your account</Text>
           <Formik
             initialValues={{
+              name: '',
               email: '',
               password: '',
             }}
             validationSchema={formSchema}
             onSubmit={(values) => {
               Keyboard.dismiss();
-              this.props.login(values);
+              this.props.register(values);
             }}>
             {({
               handleChange,
@@ -51,6 +65,18 @@ export class Login extends Component {
               touched,
             }) => (
               <View>
+                <Item floatingLabel style={styles.item}>
+                  <Label style={styles.label}>Name</Label>
+                  <Input
+                    style={styles.input}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                  />
+                </Item>
+                <Text style={styles.txtError}>
+                  {touched.name && errors.name}
+                </Text>
                 <Item floatingLabel style={styles.item}>
                   <Label style={styles.label}>Email</Label>
                   <Input
@@ -82,7 +108,7 @@ export class Login extends Component {
                   block
                   style={styles.btn}
                   onPress={handleSubmit}>
-                  <Text>Login</Text>
+                  <Text>Register</Text>
                 </Button>
               </View>
             )}
@@ -95,8 +121,45 @@ export class Login extends Component {
 
 const mapStateToProps = (state) => ({auth: state.auth});
 const mapDispatchToProps = {
-  login: authAction.login,
-  clearMsg: authAction.clearMessage,
+  register: authAction.register,
+  clearMsgRegister: authAction.clearMessageRegister,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 50,
+  },
+  item: {
+    marginBottom: 2,
+    borderBottomColor: 'black',
+  },
+  label: {
+    color: 'black',
+  },
+  input: {
+    color: 'black',
+  },
+  btn: {
+    marginTop: 20,
+  },
+  toast: {
+    marginVertical: 20,
+    marginHorizontal: 10,
+  },
+  txtError: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 2,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+});

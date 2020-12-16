@@ -4,16 +4,17 @@ import {
   Keyboard,
   ScrollView,
   Image,
+  StyleSheet,
+  PermissionsAndroid,
 } from 'react-native';
 import {View, Text, Input, Button, Item, Label, Toast} from 'native-base';
 import {Formik} from 'formik';
 import {connect} from 'react-redux';
 import * as yup from 'yup';
-import styles from './style';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'react-native-image-picker';
 
 // Import Action
-import newsAction from '../../redux/actions/news';
+import newsAction from '../redux/actions/news';
 
 const formSchema = yup.object({
   headline: yup.string().required('headline required'),
@@ -181,3 +182,47 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostNews);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  txtError: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 2,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+  input: {
+    borderColor: 'black',
+    borderWidth: 0.5,
+    marginTop: 5,
+  },
+  inputBody: {
+    borderColor: 'black',
+    borderWidth: 0.5,
+    marginTop: 5,
+    height: 100,
+  },
+  txtBtnImg: {
+    marginBottom: 10,
+    textTransform: 'capitalize',
+  },
+  img: {
+    height: 200,
+    marginVertical: 10,
+  },
+});

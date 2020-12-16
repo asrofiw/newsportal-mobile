@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {Content, Text, View} from 'native-base';
 import {connect} from 'react-redux';
-import styles from './style';
 import moment from 'moment';
 
 // import action
-import newsAction from '../../redux/actions/news';
+import newsAction from '../redux/actions/news';
 
 export class News extends Component {
   componentDidMount() {
@@ -30,7 +29,7 @@ export class News extends Component {
         <Text style={styles.title}>{headline}</Text>
         <Image
           source={
-            image ? {uri: image} : require('../../../assets/images/no_img.png')
+            image ? {uri: image} : require('../../assets/images/no_img.png')
           }
           style={styles.img}
         />
@@ -64,3 +63,53 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(News);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  title: {
+    fontSize: 18,
+    textAlign: 'justify',
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+    color: 'green',
+    marginVertical: 20,
+  },
+  img: {
+    height: 200,
+  },
+  titleImg: {
+    fontSize: 12,
+    color: 'grey',
+    marginHorizontal: 10,
+    textAlign: 'justify',
+  },
+  wrapperBody: {
+    marginHorizontal: 10,
+  },
+  authorTxt: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 5,
+  },
+  city: {
+    fontSize: 14,
+    color: 'grey',
+  },
+  create: {
+    fontSize: 14,
+    color: 'grey',
+  },
+  category: {
+    fontWeight: 'bold',
+    textAlign: 'justify',
+    fontSize: 16,
+  },
+  body: {
+    fontWeight: 'normal',
+    textAlign: 'justify',
+    fontSize: 14,
+  },
+});

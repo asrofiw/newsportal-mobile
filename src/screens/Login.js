@@ -1,51 +1,45 @@
 import React, {Component} from 'react';
 import {Button, Input, Item, Label, Text, Toast, View} from 'native-base';
-import {TouchableWithoutFeedback, Keyboard} from 'react-native';
-import styles from './style';
+import {TouchableWithoutFeedback, Keyboard, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
 // Import action
-import authAction from '../../redux/actions/auth';
+import authAction from '../redux/actions/auth';
 
 const formSchema = yup.object({
-  name: yup.string().required('name required'),
   email: yup.string().email('must be a valid email').required('email required'),
   password: yup.string().min(3).required('password required'),
 });
 
-export class Signup extends Component {
+export class Login extends Component {
   componentDidUpdate() {
-    const {
-      isSuccessRegister,
-      isFailedRegister,
-      alertMsgRegister,
-    } = this.props.auth;
-    if (isSuccessRegister || isFailedRegister) {
+    const {isSuccess, isError, alertMsg} = this.props.auth;
+    if (isSuccess || isError) {
       Toast.show({
-        text: alertMsgRegister,
+        text: alertMsg,
         buttonText: 'Ok',
         style: styles.toast,
       });
-      this.props.clearMsgRegister();
+      this.props.clearMsg();
     }
   }
+
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.parent}>
-          <Text style={styles.title}>Sign up</Text>
+          <Text style={styles.title}>Login</Text>
           <Formik
             initialValues={{
-              name: '',
               email: '',
               password: '',
             }}
             validationSchema={formSchema}
             onSubmit={(values) => {
               Keyboard.dismiss();
-              this.props.register(values);
+              this.props.login(values);
             }}>
             {({
               handleChange,
@@ -56,18 +50,6 @@ export class Signup extends Component {
               touched,
             }) => (
               <View>
-                <Item floatingLabel style={styles.item}>
-                  <Label style={styles.label}>Name</Label>
-                  <Input
-                    style={styles.input}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                  />
-                </Item>
-                <Text style={styles.txtError}>
-                  {touched.name && errors.name}
-                </Text>
                 <Item floatingLabel style={styles.item}>
                   <Label style={styles.label}>Email</Label>
                   <Input
@@ -99,7 +81,7 @@ export class Signup extends Component {
                   block
                   style={styles.btn}
                   onPress={handleSubmit}>
-                  <Text>Create Account</Text>
+                  <Text>Login</Text>
                 </Button>
               </View>
             )}
@@ -112,8 +94,45 @@ export class Signup extends Component {
 
 const mapStateToProps = (state) => ({auth: state.auth});
 const mapDispatchToProps = {
-  register: authAction.register,
-  clearMsgRegister: authAction.clearMessageRegister,
+  login: authAction.login,
+  clearMsg: authAction.clearMessage,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 50,
+  },
+  item: {
+    marginBottom: 2,
+    borderBottomColor: 'black',
+  },
+  label: {
+    color: 'black',
+  },
+  input: {
+    color: 'black',
+  },
+  btn: {
+    marginTop: 20,
+  },
+  toast: {
+    marginVertical: 20,
+    marginHorizontal: 10,
+  },
+  txtError: {
+    fontSize: 12,
+    color: 'red',
+    marginTop: 2,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+});

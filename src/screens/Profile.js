@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet, PermissionsAndroid} from 'react-native';
 import {View, Text, Container, Content, H1, Button, Toast} from 'native-base';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from './style';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-async-storage/async-storage';
 
 // Import action
-import profileAction from '../../redux/actions/profile';
-import authAction from '../../redux/actions/auth';
+import profileAction from '../redux/actions/profile';
+import authAction from '../redux/actions/auth';
 
 export class Profile extends Component {
   state = {
@@ -89,7 +88,7 @@ export class Profile extends Component {
                 source={
                   avatar
                     ? {uri: avatar}
-                    : require('../../../assets/images/default-avatar1.png')
+                    : require('../../assets/images/default-avatar1.png')
                 }
               />
               <View style={styles.icon}>
@@ -151,3 +150,87 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: 20,
+  },
+  title: {
+    fontSize: 34,
+    lineHeight: 34,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    paddingHorizontal: 20,
+  },
+  wrapperImg: {
+    height: 64,
+    width: 64,
+    borderRadius: 50,
+    marginRight: 20,
+  },
+  img: {
+    height: 64,
+    width: 64,
+    borderRadius: 50,
+    backgroundColor: 'blue',
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    height: 20,
+    width: 20,
+    borderRadius: 50,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnEdit: {
+    height: 64,
+  },
+  headProfile: {
+    height: 70,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  txtName: {
+    fontSize: 18,
+    lineHeight: 22,
+    fontWeight: 'bold',
+  },
+  txtEdit: {
+    fontSize: 14,
+    color: 'green',
+  },
+  btn: {
+    flex: 2,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomColor: '#9B9B9B',
+    borderBottomWidth: 0.5,
+    paddingHorizontal: 20,
+    height: 72,
+  },
+  txtTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    lineHeight: 16,
+    marginBottom: 10,
+  },
+  txtTitleLogout: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    lineHeight: 16,
+  },
+  txtChild: {
+    fontSize: 12,
+    lineHeight: 12,
+    color: '#9B9B9B',
+  },
+});

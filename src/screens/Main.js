@@ -28,12 +28,18 @@ const Main = () => {
               component={WelcomeScreen}
             />
             <Stack.Screen
-              options={{headerTitle: false, headerTransparent: true}}
+              options={{
+                headerTitle: false,
+                headerStyle: {backgroundColor: '#ffffff', elevation: 0},
+              }}
               name="Signup"
               component={Signup}
             />
             <Stack.Screen
-              options={{headerTitle: false, headerTransparent: true}}
+              options={{
+                headerTitle: false,
+                headerStyle: {backgroundColor: '#ffffff', elevation: 0},
+              }}
               name="Login"
               component={Login}
             />

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
-import styles from './style';
+import {Text, View, StyleSheet} from 'react-native';
 
 export class ChangePassword extends Component {
   render() {
@@ -13,3 +12,12 @@ export class ChangePassword extends Component {
 }
 
 export default ChangePassword;
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+});
