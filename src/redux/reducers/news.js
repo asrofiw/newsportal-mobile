@@ -7,6 +7,7 @@ const initialState = {
   dataNewsDetail: {},
   isLoadDetailSuccess: false,
   isLoadDetailFailed: false,
+  isLoadingPostNews: false,
   alertMsgLoadDetail: '',
   isPostNewsSuccess: false,
   isPostNewsFailed: false,
@@ -113,6 +114,7 @@ export default (state = initialState, action) => {
     case 'CLEAR_MESSAGE_POST': {
       return {
         ...state,
+        isLoadingPostNews: false,
         isPostNewsSuccess: false,
         isPostNewsFailed: false,
         alertMsgPostNews: '',

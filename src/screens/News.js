@@ -3,16 +3,20 @@ import {Image, StyleSheet} from 'react-native';
 import {Content, Text, View} from 'native-base';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import {API_URL} from '@env';
 
 // import action
 import newsAction from '../redux/actions/news';
 
 export class News extends Component {
-  componentDidMount() {
-    const {id} = this.props.route.params;
-    const {token} = this.props.auth;
-    this.props.getNewsDetail(token, id);
-    console.log(this.props.news);
+  async componentDidMount() {
+    try {
+      const {id} = this.props.route.params;
+      const {token} = this.props.auth;
+      await this.props.getNewsDetail(token, id);
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   render() {
@@ -29,7 +33,9 @@ export class News extends Component {
         <Text style={styles.title}>{headline}</Text>
         <Image
           source={
-            image ? {uri: image} : require('../../assets/images/no_img.png')
+            image
+              ? {uri: `${API_URL}${image}`}
+              : require('../../assets/images/no_img.png')
           }
           style={styles.img}
         />

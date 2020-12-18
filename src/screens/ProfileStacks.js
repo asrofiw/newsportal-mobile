@@ -16,7 +16,7 @@ const ProfileStacks = () => {
         component={Profile}
       />
       <Stack.Screen
-        options={{headerTransparent: true, headerTitle: false}}
+        options={{title: 'Edit Profile', headerTitleAlign: 'center'}}
         name="EditProfile"
         component={EditProfile}
       />

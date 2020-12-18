@@ -1,23 +1,24 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
+import {API_URL} from '@env';
+import {useNavigation} from '@react-navigation/native';
 
-const RenderCArdListNews = ({article}) => {
+const RenderCardListNews = ({article}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.wrapper}>
       <Image
         source={
           article.image
-            ? {uri: article.image}
-            : require('../../../assets/images/no_img.png')
+            ? {uri: `${API_URL}${article.image}`}
+            : require('../../assets/images/no_img.png')
         }
         style={styles.img}
       />
       <View style={styles.wrapperRight}>
         <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('News', {id: article.id})
-          }>
+          onPress={() => navigation.navigate('News', {id: article.id})}>
           <Text style={styles.headline}>{article.headline}</Text>
         </TouchableOpacity>
         <Text style={styles.category}>
@@ -31,7 +32,7 @@ const RenderCArdListNews = ({article}) => {
   );
 };
 
-export default RenderCArdListNews;
+export default RenderCardListNews;
 
 const styles = StyleSheet.create({
   wrapper: {

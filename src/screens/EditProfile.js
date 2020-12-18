@@ -17,18 +17,25 @@ import * as yup from 'yup';
 // import Action
 import profileAction from '../redux/actions/profile';
 
+// IMport component
+import ModalLoading from '../Components/ModalLoading';
+
 const formSchema = yup.object({
   name: yup.string().required('name required'),
   email: yup.string().email('must be a valid email'),
-  birthdate: yup.string(),
-  gender: yup.string(),
+  birthdate: yup.string().nullable(),
+  gender: yup.string().nullable(),
 });
 
 export class EditProfile extends Component {
-  componentDidMount() {
-    const {token} = this.props.auth;
-    this.props.getProfile(token);
-    console.log(this.props.profile);
+  async componentDidMount() {
+    try {
+      const {token} = this.props.auth;
+      await this.props.getProfile(token);
+      console.log(this.props.profile);
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   componentDidUpdate() {
@@ -51,9 +58,9 @@ export class EditProfile extends Component {
     const {name, email, birthdate, gender} = this.props.profile.dataUserDetail;
     return (
       <Content style={styles.parent}>
+        {this.props.profile.isLoadingUpdate && <ModalLoading />}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
-            <Text style={styles.title}>Edit your profile</Text>
             <Formik
               initialValues={{
                 name: name,
@@ -62,17 +69,30 @@ export class EditProfile extends Component {
                 gender: gender,
               }}
               validationSchema={formSchema}
-              onSubmit={(values) => {
-                const data = {
-                  name: values.name,
-                  email: values.email,
-                  birthdate: values.birthdate,
-                  gender: values.gender,
-                };
-                if (values.email === email) {
-                  delete data.email;
+              onSubmit={async (values) => {
+                try {
+                  const data = {};
+                  if (values.name !== name) {
+                    data.name = values.name;
+                  } else if (values.email !== email) {
+                    data.email = values.email;
+                  } else if (values.birthdate !== birthdate) {
+                    data.birthdate = values.birthdate;
+                  } else if (values.gender !== gender) {
+                    data.gender = values.gender;
+                  }
+
+                  if (Object.values(data).length > 0) {
+                    await this.props.updateProfile(token, data);
+                  } else {
+                    Toast.show({
+                      text: 'There is no data changed',
+                      buttonText: 'Ok',
+                    });
+                  }
+                } catch (e) {
+                  console.log(e.message);
                 }
-                this.props.updateProfile(token, data);
               }}>
               {({
                 handleChange,
@@ -87,6 +107,7 @@ export class EditProfile extends Component {
                     <Label style={styles.label}>Name</Label>
                     <Input
                       placeholder="enter your name"
+                      placeholderTextColor="#9b9b9b"
                       onChangeText={handleChange('name')}
                       onBlur={handleBlur('name')}
                       value={values.name}
@@ -100,6 +121,7 @@ export class EditProfile extends Component {
                     <Label style={styles.label}>Email</Label>
                     <Input
                       placeholder="enter your email"
+                      placeholderTextColor="#9b9b9b"
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
                       value={values.email}
@@ -113,6 +135,7 @@ export class EditProfile extends Component {
                     <Label style={styles.label}>Birthdate</Label>
                     <Input
                       placeholder="yyyy/mm/dd"
+                      placeholderTextColor="#9b9b9b"
                       onChangeText={handleChange('birthdate')}
                       onBlur={handleBlur('birthdate')}
                       value={values.birthdate}
@@ -126,6 +149,7 @@ export class EditProfile extends Component {
                     <Label style={styles.label}>Gender</Label>
                     <Input
                       placeholder="Male or Female"
+                      placeholderTextColor="#9b9b9b"
                       onChangeText={handleChange('gender')}
                       onBlur={handleBlur('gender')}
                       value={values.gender}
@@ -166,7 +190,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: 20,
-    paddingTop: 70,
+    paddingVertical: 20,
   },
   title: {
     fontSize: 24,

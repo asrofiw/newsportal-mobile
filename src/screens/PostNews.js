@@ -5,7 +5,6 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-  PermissionsAndroid,
 } from 'react-native';
 import {View, Text, Input, Button, Item, Label, Toast} from 'native-base';
 import {Formik} from 'formik';
@@ -15,6 +14,9 @@ import * as ImagePicker from 'react-native-image-picker';
 
 // Import Action
 import newsAction from '../redux/actions/news';
+
+// Import component
+import ModalLoading from '../Components/ModalLoading';
 
 const formSchema = yup.object({
   headline: yup.string().required('headline required'),
@@ -28,12 +30,23 @@ export class PostNews extends Component {
     image: null,
   };
 
-  handleChoosePhoto = () => {
+  openGallery = () => {
     const option = {
       noData: true,
+      saveToPhotos: true,
+      mediaType: 'photo',
     };
     ImagePicker.launchImageLibrary(option, (res) => {
-      if (res.uri) {
+      if (
+        res.didCancel ||
+        res.error ||
+        res.customButton ||
+        res.errorMessage ||
+        res.errorCode
+      ) {
+        console.log(res);
+      } else {
+        console.log(res);
         this.setState({image: res});
       }
     });
@@ -57,9 +70,10 @@ export class PostNews extends Component {
     const {image} = this.state;
     const {token} = this.props.auth;
     return (
-      <ScrollView style={styles.parent}>
+      <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
+          <View style={styles.parent}>
+            {this.props.news.isLoadingPostNews && <ModalLoading />}
             <Text style={styles.title}>Create News</Text>
             <Formik
               initialValues={{
@@ -69,19 +83,22 @@ export class PostNews extends Component {
                 body: '',
               }}
               validationSchema={formSchema}
-              onSubmit={(values) => {
-                const form = new FormData();
-                form.append('headline', values.headline);
-                form.append('city', values.city);
-                form.append('category', values.category);
-                form.append('body', values.body);
-                form.append('image', {
-                  uri: image.uri,
-                  type: image.type,
-                  name: image.fileName,
-                });
-                this.props.postNews(token, form);
-                console.log(form);
+              onSubmit={async (values) => {
+                try {
+                  const form = new FormData();
+                  form.append('headline', values.headline);
+                  form.append('city', values.city);
+                  form.append('category', values.category);
+                  form.append('body', values.body);
+                  form.append('image', {
+                    uri: image.uri,
+                    type: image.type,
+                    name: image.fileName,
+                  });
+                  await this.props.postNews(token, form);
+                } catch (e) {
+                  console.log(e.message);
+                }
               }}>
               {({
                 handleChange,
@@ -153,7 +170,8 @@ export class PostNews extends Component {
                     success
                     full
                     transparent
-                    onPress={this.handleChoosePhoto}>
+                    onPress={this.openGallery}
+                    style={styles.btnChooseImg}>
                     <Text style={styles.txtBtnImg}>Choose Image</Text>
                   </Button>
                   {image && <Image source={image} style={styles.img} />}
@@ -217,12 +235,16 @@ const styles = StyleSheet.create({
     marginTop: 5,
     height: 100,
   },
+  btnChooseImg: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   txtBtnImg: {
-    marginBottom: 10,
     textTransform: 'capitalize',
   },
   img: {
     height: 200,
-    marginVertical: 10,
+    width: '100%',
+    marginBottom: 20,
   },
 });

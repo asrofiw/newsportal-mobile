@@ -8,28 +8,35 @@ import * as yup from 'yup';
 // Import action
 import authAction from '../redux/actions/auth';
 
+// import components
+import ModalLoading from '../Components/ModalLoading';
+
 const formSchema = yup.object({
   email: yup.string().email('must be a valid email').required('email required'),
-  password: yup.string().min(3).required('password required'),
+  password: yup.string().min(8).required('password required'),
 });
 
 export class Login extends Component {
   componentDidUpdate() {
     const {isSuccess, isError, alertMsg} = this.props.auth;
     if (isSuccess || isError) {
-      Toast.show({
-        text: alertMsg,
-        buttonText: 'Ok',
-        style: styles.toast,
-      });
+      setTimeout(() => {
+        Toast.show({
+          text: alertMsg,
+          buttonText: 'Ok',
+          style: styles.toast,
+        });
+      }, 2000);
       this.props.clearMsg();
     }
   }
 
   render() {
+    const {isLoading} = this.props.auth;
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.parent}>
+          {isLoading && <ModalLoading />}
           <Text style={styles.title}>Login</Text>
           <Formik
             initialValues={{
@@ -39,7 +46,7 @@ export class Login extends Component {
             validationSchema={formSchema}
             onSubmit={(values) => {
               Keyboard.dismiss();
-              this.props.login(values);
+              this.props.login(values).catch((e) => console.log(e.message));
             }}>
             {({
               handleChange,

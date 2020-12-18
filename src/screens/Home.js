@@ -1,21 +1,27 @@
 import React, {Component} from 'react';
-import {FlatList, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {Text, View} from 'native-base';
+import {FlatList, StyleSheet} from 'react-native';
+import {View} from 'native-base';
 import {connect} from 'react-redux';
-import moment from 'moment';
 
 // import action
 import newsAction from '../redux/actions/news';
+
+// import Components
+import RenderCardListNews from '../Components/RenderCardListNews';
 
 export class Home extends Component {
   state = {
     loading: false,
   };
 
-  getData = () => {
+  getData = async () => {
     this.setState({loading: true});
     const {token} = this.props.auth;
-    this.props.getNews(token);
+    try {
+      await this.props.getNews(token);
+    } catch (e) {
+      console.log(e.message);
+    }
     this.setState({loading: false});
   };
 
@@ -24,46 +30,23 @@ export class Home extends Component {
   }
 
   nextPage = () => {
-    const {nextLink} = this.props.news.pageInfo;
+    if (this.props.news.pageInfo) {
+      const {nextLink} = this.props.news.pageInfo;
+      if (nextLink) {
+        console.log(nextLink);
+      }
+    }
   };
 
   render() {
     const {dataAllNews} = this.props.news;
-    const RenderItem = ({article}) => {
-      return (
-        <View style={styles.wrapper}>
-          <Image
-            source={
-              article.image
-                ? {uri: article.image}
-                : require('../../assets/images/no_img.png')
-            }
-            style={styles.img}
-          />
-          <View style={styles.wrapperRight}>
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('News', {id: article.id})
-              }>
-              <Text style={styles.headline}>{article.headline}</Text>
-            </TouchableOpacity>
-            <Text style={styles.category}>
-              {article.category} |{' '}
-              <Text style={styles.date}>
-                {moment.utc(article.date).local().startOf('seconds').fromNow()}
-              </Text>
-            </Text>
-          </View>
-        </View>
-      );
-    };
 
     return (
       <View style={styles.parent}>
         {this.props.news && (
           <FlatList
             data={dataAllNews}
-            renderItem={({item}) => <RenderItem article={item} />}
+            renderItem={({item}) => <RenderCardListNews article={item} />}
             onEndReachedThreshold={0.5}
             onEndReached={this.nextPage}
             refreshing={this.state.loading}

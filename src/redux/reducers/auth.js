@@ -1,4 +1,6 @@
 const initialState = {
+  isLoading: false,
+  isLoadingRegister: false,
   isSuccess: false,
   isLogin: false,
   isError: false,
@@ -61,15 +63,22 @@ export default (state = initialState, action) => {
     }
     case 'LOGOUT_USER': {
       return {
+        isLoading: false,
+        isLoadingRegister: false,
+        isSuccess: false,
         isLogin: false,
-        token: '',
         isError: false,
+        token: '',
+        isSuccessRegister: false,
+        isFailedRegister: false,
+        alertMsgRegister: '',
         alertMsg: 'Logout Successfully',
       };
     }
     case 'CLEAR_MESSAGE_REGISTER': {
       return {
         ...state,
+        isLoadingRegister: false,
         isSuccessRegister: false,
         isFailedRegister: false,
         alertMsgRegister: '',
@@ -78,6 +87,7 @@ export default (state = initialState, action) => {
     case 'CLEAR_MESSAGE': {
       return {
         ...state,
+        isLoading: false,
         isSuccess: false,
         isError: false,
         alertMsg: '',

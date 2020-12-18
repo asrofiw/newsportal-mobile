@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Root} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 // Import pages
 import WelcomeScreen from './Welcome';
@@ -16,7 +17,9 @@ const Stack = createStackNavigator();
 
 const Main = () => {
   const auth = useSelector((state) => state.auth);
-  console.log(auth.isLogin);
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <Root>
       <NavigationContainer>
