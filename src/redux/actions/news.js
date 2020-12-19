@@ -17,7 +17,15 @@ export default {
     type: 'POST_NEWS',
     payload: http(token).post('private/news', data),
   }),
-  clearMsgPost: () => ({
-    type: 'CLEAR_MESSAGE_POST',
+  searchNews: (token, search = '', sort = 'desc') => ({
+    type: 'SEARCH_NEWS',
+    payload: http(token).get(`private/news?search=${search}&sort=${sort}`),
+  }),
+  searchNext: (token, nextLink) => ({
+    type: 'SEARCH_NEXT',
+    payload: http(token).get(nextLink),
+  }),
+  clearMsg: () => ({
+    type: 'CLEAR_MESSAGE',
   }),
 };

@@ -7,6 +7,7 @@ import {PermissionsAndroid} from 'react-native';
 import HomeStacks from './HomeStacks';
 import PostNews from './PostNews';
 import ProfileStacks from './ProfileStacks';
+import Search from './Search';
 
 const Bottom = createBottomTabNavigator();
 
@@ -34,11 +35,26 @@ export class BottomTabs extends Component {
   };
   render() {
     return (
-      <Bottom.Navigator>
+      <Bottom.Navigator
+        tabBarOptions={{
+          activeTintColor: 'green',
+          inactiveTintColor: 'grey',
+          keyboardHidesTabBar: true,
+          tabStyle: {
+            paddingVertical: 10,
+          },
+          style: {
+            height: 70,
+          },
+        }}>
         <Bottom.Screen
           options={{
             tabBarIcon: ({size, color, focused}) => (
-              <Icon name="home" size={size} color={color} />
+              <Icon
+                name={focused ? 'home' : 'home-outline'}
+                size={size}
+                color={color}
+              />
             ),
           }}
           name="Home"
@@ -47,7 +63,20 @@ export class BottomTabs extends Component {
         <Bottom.Screen
           options={{
             tabBarIcon: ({size, color, focused}) => (
-              <Icon name="plus-box" size={size} color={color} />
+              <Icon name="magnify" size={size} color={color} />
+            ),
+          }}
+          name="Search"
+          component={Search}
+        />
+        <Bottom.Screen
+          options={{
+            tabBarIcon: ({size, color, focused}) => (
+              <Icon
+                name={focused ? 'plus-circle' : 'plus-circle-outline'}
+                size={size}
+                color={color}
+              />
             ),
           }}
           name="Post"
@@ -56,7 +85,11 @@ export class BottomTabs extends Component {
         <Bottom.Screen
           options={{
             tabBarIcon: ({size, color, focused}) => (
-              <Icon name="account" size={size} color={color} />
+              <Icon
+                name={focused ? 'account' : 'account-outline'}
+                size={size}
+                color={color}
+              />
             ),
           }}
           name="Profile"

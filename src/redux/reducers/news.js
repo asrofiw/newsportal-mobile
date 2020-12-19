@@ -12,6 +12,11 @@ const initialState = {
   isPostNewsSuccess: false,
   isPostNewsFailed: false,
   alertMsgPostNews: '',
+  isLoadingSearch: false,
+  isErrorSearch: false,
+  isSuccessSearch: false,
+  dataSearch: [],
+  pageInfoSearch: {},
 };
 
 export default (state = initialState, action) => {
@@ -111,13 +116,72 @@ export default (state = initialState, action) => {
         alertMsgPostNews: action.payload.data.message,
       };
     }
-    case 'CLEAR_MESSAGE_POST': {
+    case 'SEARCH_NEWS_PENDING': {
       return {
         ...state,
+        isLoadingSearch: true,
+      };
+    }
+    case 'SEARCH_NEWS_REJECTED': {
+      return {
+        ...state,
+        isLoadingSearch: false,
+        isErrorSearch: true,
+        alertMsg: action.payload.response.data.message,
+        dataSearch: [],
+      };
+    }
+    case 'SEARCH_NEWS_FULFILLED': {
+      return {
+        ...state,
+        isLoadingSearch: false,
+        isErrorSearch: false,
+        isSuccessSearch: true,
+        alertMsg: action.payload.data.message,
+        dataSearch: action.payload.data.results,
+        pageInfoSearch: action.payload.data.pageInfo,
+      };
+    }
+    case 'SEARCH_NEXT_PENDING': {
+      return {
+        ...state,
+        isLoadingSearch: true,
+      };
+    }
+    case 'SEARCH_NEXT_REJECTED': {
+      return {
+        ...state,
+        isLoadingSearch: false,
+        isErrorSearch: true,
+        alertMsg: action.payload.response.data.message,
+      };
+    }
+    case 'SEARCH_NEXT_FULFILLED': {
+      return {
+        ...state,
+        dataSearch: [...initialState.dataSearch, action.payload.data.results],
+        isLoadingSearch: false,
+        isSuccessSearch: true,
+        alertMsg: action.payload.data.message,
+        pageInfoSearch: action.payload.data.pageInfo,
+      };
+    }
+    case 'CLEAR_MESSAGE': {
+      return {
+        ...state,
+        isSuccess: false,
+        isError: false,
+        alertMsg: '',
+        isLoadDetailSuccess: false,
+        isLoadDetailFailed: false,
         isLoadingPostNews: false,
+        alertMsgLoadDetail: '',
         isPostNewsSuccess: false,
         isPostNewsFailed: false,
         alertMsgPostNews: '',
+        isLoadingSearch: false,
+        isErrorSearch: false,
+        isSuccessSearch: false,
       };
     }
     default: {

@@ -29,12 +29,17 @@ export class Home extends Component {
     this.getData();
   }
 
-  nextPage = () => {
-    if (this.props.news.pageInfo) {
-      const {nextLink} = this.props.news.pageInfo;
-      if (nextLink) {
-        console.log(nextLink);
+  nextPage = async () => {
+    try {
+      const {token} = this.props.auth;
+      if (this.props.news.pageInfo) {
+        const {nextLink} = this.props.news.pageInfo;
+        if (nextLink) {
+          await this.props.getNewsNext(token, nextLink);
+        }
       }
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
@@ -47,6 +52,7 @@ export class Home extends Component {
           <FlatList
             data={dataAllNews}
             renderItem={({item}) => <RenderCardListNews article={item} />}
+            keyExtractor={(item) => item.id.toString()}
             onEndReachedThreshold={0.5}
             onEndReached={this.nextPage}
             refreshing={this.state.loading}

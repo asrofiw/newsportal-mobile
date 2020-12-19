@@ -196,7 +196,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   postNews: newsAction.postNews,
-  clearMsg: newsAction.clearMsgPost,
+  clearMsg: newsAction.clearMsg,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostNews);
