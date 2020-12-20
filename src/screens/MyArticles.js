@@ -80,22 +80,21 @@ export class MyArticles extends Component {
       <View style={styles.parent}>
         {isLoading && <ModalLoading />}
         {this.props.news && articlesUser ? (
-          <View style={styles.wrapperList}>
-            <FlatList
-              data={articlesUser}
-              renderItem={({item}) => (
-                <RenderCardMyArticles
-                  article={item}
-                  onPressDelete={() => this.onDelete(item.id)}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-              onEndReachedThreshold={0.5}
-              onEndReached={this.nextPage}
-              refreshing={this.state.loading}
-              onRefresh={this.getData}
-            />
-          </View>
+          <FlatList
+            data={articlesUser}
+            contentContainerStyle={styles.wrapperList}
+            renderItem={({item}) => (
+              <RenderCardMyArticles
+                article={item}
+                onPressDelete={() => this.onDelete(item.id)}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+            onEndReachedThreshold={0.5}
+            onEndReached={this.nextPage}
+            refreshing={this.state.loading}
+            onRefresh={this.getData}
+          />
         ) : (
           <View style={styles.wrapperText}>
             <Text>You haven't post a news yet</Text>

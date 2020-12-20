@@ -68,7 +68,7 @@ export default (state = initialState, action) => {
     case 'GET_NEWS_NEXT_FULFILLED': {
       return {
         ...state,
-        dataAllNews: [...initialState.dataAllNews, action.payload.data.results],
+        dataAllNews: [...state.dataAllNews, ...action.payload.data.results],
         isLoading: false,
         isSuccess: true,
         alertMsg: action.payload.data.message,
@@ -165,7 +165,7 @@ export default (state = initialState, action) => {
     case 'SEARCH_NEXT_FULFILLED': {
       return {
         ...state,
-        dataSearch: [...initialState.dataSearch, action.payload.data.results],
+        dataSearch: [...state.dataSearch, ...action.payload.data.results],
         isLoadingSearch: false,
         isSuccessSearch: true,
         alertMsg: action.payload.data.message,
@@ -214,10 +214,7 @@ export default (state = initialState, action) => {
     case 'GET_NEWS_NEXT_USER_FULFILLED': {
       return {
         ...state,
-        articlesUser: [
-          ...initialState.articlesUser,
-          action.payload.data.results,
-        ],
+        articlesUser: [...state.articlesUser, ...action.payload.data.results],
         isLoading: false,
         isSuccess: true,
         alertMsg: action.payload.data.message,
