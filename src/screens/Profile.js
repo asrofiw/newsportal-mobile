@@ -10,6 +10,7 @@ import {API_URL} from '@env';
 // Import action
 import profileAction from '../redux/actions/profile';
 import authAction from '../redux/actions/auth';
+import newsAction from '../redux/actions/news';
 
 // Import component
 import ModalLoading from '../Components/ModalLoading';
@@ -84,11 +85,15 @@ export class Profile extends Component {
           Toast.show({
             text: 'Limit file size 2mb',
             buttonText: 'Ok',
+            style: styles.toast,
+            duration: 3000,
           });
         } else if (!fileFilter.includes(avatar.type)) {
           Toast.show({
             text: 'File must be an image',
             buttonText: 'Ok',
+            style: styles.toast,
+            duration: 3000,
           });
         } else {
           form.append('avatar', {
@@ -106,7 +111,9 @@ export class Profile extends Component {
 
   logoutHandle = () => {
     this.props.logout();
-    storage.removeItem('persist:root');
+    this.props.logoutProfile();
+    this.props.logoutNews();
+    storage.removeItem('persist:newsportal');
     Toast.show({
       text: 'Logout successfully',
       buttonText: 'Ok',
@@ -135,12 +142,12 @@ export class Profile extends Component {
       } = this.props.profile;
       if (isSuccessUpdate || isFailedUpdate) {
         this.closeModal();
-        setTimeout(() => {
-          Toast.show({
-            text: alertMsgUpdate,
-            buttonText: 'Ok',
-          });
-        }, 2000);
+        Toast.show({
+          text: alertMsgUpdate,
+          buttonText: 'Ok',
+          style: styles.toast,
+          duration: 3000,
+        });
         const {token} = this.props.auth;
         this.props.getProfile(token);
         this.props.clearMsgUpdate();
@@ -219,7 +226,19 @@ export class Profile extends Component {
             onPress={() => this.props.navigation.navigate('ChangePassword')}>
             <View>
               <Text style={styles.txtTitle}>Settings</Text>
-              <Text style={styles.txtChild}>password</Text>
+              <Text style={styles.txtChild}>change password</Text>
+            </View>
+            <View>
+              <Icon name="chevron-right" color="#9B9B9B" size={25} />
+            </View>
+          </Button>
+          <Button
+            full
+            transparent
+            style={styles.btn}
+            onPress={() => this.props.navigation.navigate('MyArticles')}>
+            <View>
+              <Text style={styles.txtTitleLogout}>My articles</Text>
             </View>
             <View>
               <Icon name="chevron-right" color="#9B9B9B" size={25} />
@@ -253,6 +272,8 @@ const mapDispatchToProps = {
   updateAvatar: profileAction.updateAvatar,
   clearMsgUpdate: profileAction.clearAlertMsgUpdate,
   logout: authAction.logout,
+  logoutProfile: profileAction.logout,
+  logoutNews: newsAction.logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
@@ -378,5 +399,9 @@ const styles = StyleSheet.create({
   },
   txtCancel: {
     color: 'green',
+  },
+  toast: {
+    marginVertical: 20,
+    marginHorizontal: 10,
   },
 });

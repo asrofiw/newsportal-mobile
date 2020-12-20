@@ -14,6 +14,16 @@ export default {
     type: 'UPDATE_AVATAR',
     payload: http(token).patch('/private/users', data),
   }),
+  changePassword: (token, data) => ({
+    type: 'CHANGE_PASSWORD',
+    payload: http(token).patch(
+      '/private/users/change-password',
+      qs.stringify(data),
+    ),
+  }),
+  logout: () => ({
+    type: 'LOGOUT_USER',
+  }),
   clearAlertMsgUpdate: () => ({
     type: 'CLEAR_UPDATE_STATE',
   }),

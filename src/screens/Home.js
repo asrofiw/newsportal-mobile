@@ -8,6 +8,7 @@ import newsAction from '../redux/actions/news';
 
 // import Components
 import RenderCardListNews from '../Components/RenderCardListNews';
+import ModalLoading from '../Components/ModalLoading';
 
 export class Home extends Component {
   state = {
@@ -44,10 +45,11 @@ export class Home extends Component {
   };
 
   render() {
-    const {dataAllNews} = this.props.news;
+    const {dataAllNews, isLoading} = this.props.news;
 
     return (
       <View style={styles.parent}>
+        {isLoading && <ModalLoading />}
         {this.props.news && (
           <FlatList
             data={dataAllNews}

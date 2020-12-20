@@ -30,6 +30,7 @@ export class Signup extends Component {
         text: alertMsgRegister,
         buttonText: 'Ok',
         style: styles.toast,
+        duration: 3000,
       });
       setTimeout(() => {
         this.props.navigation.navigate('Login');
@@ -42,6 +43,7 @@ export class Signup extends Component {
         text: alertMsgRegister,
         buttonText: 'Ok',
         style: styles.toast,
+        duration: 3000,
       });
       this.props.clearMsgRegister();
     }

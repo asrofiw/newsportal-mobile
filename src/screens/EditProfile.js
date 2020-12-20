@@ -48,6 +48,8 @@ export class EditProfile extends Component {
       Toast.show({
         text: alertMsgUpdate,
         buttonText: 'Ok',
+        style: styles.toast,
+        duration: 3000,
       });
       this.props.clearMsgUpdate();
     }
@@ -207,5 +209,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 10,
     textAlign: 'left',
+  },
+  toast: {
+    marginVertical: 20,
+    marginHorizontal: 10,
   },
 });

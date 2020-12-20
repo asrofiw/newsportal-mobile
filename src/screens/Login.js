@@ -20,13 +20,12 @@ export class Login extends Component {
   componentDidUpdate() {
     const {isSuccess, isError, alertMsg} = this.props.auth;
     if (isSuccess || isError) {
-      setTimeout(() => {
-        Toast.show({
-          text: alertMsg,
-          buttonText: 'Ok',
-          style: styles.toast,
-        });
-      }, 2000);
+      Toast.show({
+        text: alertMsg,
+        buttonText: 'Ok',
+        style: styles.toast,
+        duration: 3000,
+      });
       this.props.clearMsg();
     }
   }

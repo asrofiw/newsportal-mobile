@@ -3,8 +3,9 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {API_URL} from '@env';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const RenderCardListNews = ({article}) => {
+const RenderCardMyArticles = ({article, onPressDelete}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -18,7 +19,7 @@ const RenderCardListNews = ({article}) => {
           }
           style={styles.img}
         />
-        <View style={styles.wrapperRight}>
+        <View style={styles.wrapperContent}>
           <Text style={styles.headline}>{article.headline}</Text>
           <Text style={styles.category}>
             {article.category} |{' '}
@@ -27,12 +28,17 @@ const RenderCardListNews = ({article}) => {
             </Text>
           </Text>
         </View>
+        <View style={styles.wrapperRight}>
+          <TouchableOpacity onPress={onPressDelete}>
+            <Icon name="trash-can-outline" size={20} color="grey" />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default RenderCardListNews;
+export default RenderCardMyArticles;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -46,9 +52,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 10,
   },
-  wrapperRight: {
-    height: 130,
-    width: 250,
+  wrapperContent: {
+    flexGrow: 1,
+    width: '50%',
     paddingVertical: 3,
   },
   headline: {
@@ -65,5 +71,10 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 14,
     color: 'grey',
+  },
+  wrapperRight: {
+    width: 30,
+    alignItems: 'flex-end',
+    paddingVertical: 3,
   },
 });

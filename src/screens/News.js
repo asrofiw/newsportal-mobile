@@ -29,29 +29,31 @@ export class News extends Component {
       body,
     } = this.props.news.dataNewsDetail;
     return (
-      <Content style={styles.parent}>
-        <Text style={styles.title}>{headline}</Text>
-        <Image
-          source={
-            image
-              ? {uri: `${API_URL}${image}`}
-              : require('../../assets/images/no_img.png')
-          }
-          style={styles.img}
-        />
-        <Text style={styles.titleImg}>{headline}</Text>
-        <View style={styles.wrapperBody}>
-          <View style={styles.authorTxt}>
-            <Text style={styles.city}>{city}, </Text>
-            <Text style={styles.create}>
-              {moment.utc(createdAt).local().startOf('seconds').fromNow()}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.category}>
-              {category}
-              <Text style={styles.body}> - {body}</Text>
-            </Text>
+      <Content>
+        <View style={styles.parent}>
+          <Text style={styles.title}>{headline}</Text>
+          <Image
+            source={
+              image
+                ? {uri: `${API_URL}${image}`}
+                : require('../../assets/images/no_img.png')
+            }
+            style={styles.img}
+          />
+          <Text style={styles.titleImg}>{headline}</Text>
+          <View style={styles.wrapperBody}>
+            <View style={styles.authorTxt}>
+              <Text style={styles.city}>{city}, </Text>
+              <Text style={styles.create}>
+                {moment.utc(createdAt).local().startOf('seconds').fromNow()}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.category}>
+                {category}
+                <Text style={styles.body}> - {body}</Text>
+              </Text>
+            </View>
           </View>
         </View>
       </Content>
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   parent: {
     flex: 1,
     backgroundColor: 'white',
+    paddingVertical: 20,
   },
   title: {
     fontSize: 18,
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 10,
     color: 'green',
-    marginVertical: 20,
+    marginBottom: 20,
   },
   img: {
     height: 200,

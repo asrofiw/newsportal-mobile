@@ -62,6 +62,8 @@ export class PostNews extends Component {
       Toast.show({
         text: alertMsgPostNews,
         buttonText: 'Ok',
+        style: styles.toast,
+        duration: 3000,
       });
       this.props.clearMsg();
     }
@@ -155,6 +157,7 @@ export class PostNews extends Component {
                     <Label style={styles.label}>Body</Label>
                     <Input
                       multiline={true}
+                      numberOfLines={5}
                       placeholder="Content goes here..."
                       onChangeText={handleChange('body')}
                       onBlur={handleBlur('body')}
@@ -233,7 +236,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 0.5,
     marginTop: 5,
-    height: 100,
+    justifyContent: 'flex-start',
   },
   btnChooseImg: {
     alignItems: 'center',
@@ -246,5 +249,9 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
     marginBottom: 20,
+  },
+  toast: {
+    marginVertical: 20,
+    marginHorizontal: 10,
   },
 });

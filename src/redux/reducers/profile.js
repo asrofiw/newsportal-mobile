@@ -80,6 +80,41 @@ export default (state = initialState, action) => {
         alertMsgUpdate: action.payload.data.message,
       };
     }
+    case 'CHANGE_PASSWORD_PENDING': {
+      return {
+        ...state,
+        isLoadingUpdate: true,
+      };
+    }
+    case 'CHANGE_PASSWORD_REJECTED': {
+      return {
+        ...state,
+        isLoadingUpdate: false,
+        isFailedUpdate: true,
+        alertMsgUpdate: action.payload.response.data.message,
+      };
+    }
+    case 'CHANGE_PASSWORD_FULFILLED': {
+      return {
+        ...state,
+        isFailedUpdate: false,
+        isLoadingUpdate: false,
+        isSuccessUpdate: true,
+        alertMsgUpdate: action.payload.data.message,
+      };
+    }
+    case 'LOGOUT_USER': {
+      return {
+        isSuccess: false,
+        isError: false,
+        dataUserDetail: {},
+        alertMsg: '',
+        isFailedUpdate: false,
+        isLoadingUpdate: false,
+        isSuccessUpdate: false,
+        alertMsgUpdate: '',
+      };
+    }
     case 'CLEAR_UPDATE_STATE': {
       return {
         ...state,

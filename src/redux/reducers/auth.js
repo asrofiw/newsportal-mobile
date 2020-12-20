@@ -72,7 +72,7 @@ export default (state = initialState, action) => {
         isSuccessRegister: false,
         isFailedRegister: false,
         alertMsgRegister: '',
-        alertMsg: 'Logout Successfully',
+        alertMsg: '',
       };
     }
     case 'CLEAR_MESSAGE_REGISTER': {
