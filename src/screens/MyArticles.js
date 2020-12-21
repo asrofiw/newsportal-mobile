@@ -79,7 +79,7 @@ export class MyArticles extends Component {
     return (
       <View style={styles.parent}>
         {isLoading && <ModalLoading />}
-        {this.props.news && articlesUser ? (
+        {articlesUser.length > 0 ? (
           <FlatList
             data={articlesUser}
             contentContainerStyle={styles.wrapperList}
@@ -97,7 +97,7 @@ export class MyArticles extends Component {
           />
         ) : (
           <View style={styles.wrapperText}>
-            <Text>You haven't post a news yet</Text>
+            <Text>You haven't post any articles yet</Text>
           </View>
         )}
       </View>

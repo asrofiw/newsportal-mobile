@@ -117,6 +117,8 @@ export class Profile extends Component {
     Toast.show({
       text: 'Logout successfully',
       buttonText: 'Ok',
+      style: styles.toast,
+      duration: 3000,
     });
   };
 

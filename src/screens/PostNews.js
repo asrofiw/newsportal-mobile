@@ -72,7 +72,7 @@ export class PostNews extends Component {
     const {image} = this.state;
     const {token} = this.props.auth;
     return (
-      <ScrollView>
+      <ScrollView removeClippedSubviews={false}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.parent}>
             {this.props.news.isLoadingPostNews && <ModalLoading />}
