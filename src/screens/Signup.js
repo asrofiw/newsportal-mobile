@@ -18,6 +18,20 @@ const formSchema = yup.object({
 });
 
 export class Signup extends Component {
+  state = {
+    name: '',
+    email: '',
+    password: '',
+  };
+
+  onClearState = () => {
+    this.setState({
+      name: '',
+      email: '',
+      password: '',
+    });
+  };
+
   componentDidUpdate() {
     const {
       isSuccessRegister,
@@ -35,6 +49,7 @@ export class Signup extends Component {
       setTimeout(() => {
         this.props.navigation.navigate('Login');
         this.props.clearMsgRegister();
+        this.onClearState();
       });
     }
 
@@ -50,6 +65,7 @@ export class Signup extends Component {
   }
   render() {
     const {isLoadingRegister} = this.props.auth;
+    const {name, email, password} = this.state;
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.parent}>
@@ -57,9 +73,9 @@ export class Signup extends Component {
           <Text style={styles.title}>Register your account</Text>
           <Formik
             initialValues={{
-              name: '',
-              email: '',
-              password: '',
+              name: name,
+              email: email,
+              password: password,
             }}
             validationSchema={formSchema}
             onSubmit={(values) => {

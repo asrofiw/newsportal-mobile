@@ -27,6 +27,10 @@ const formSchema = yup.object({
 
 export class PostNews extends Component {
   state = {
+    headline: '',
+    city: '',
+    category: '',
+    body: '',
     image: null,
   };
 
@@ -52,13 +56,33 @@ export class PostNews extends Component {
     });
   };
 
+  onResetState = () => {
+    this.setState({
+      headline: '',
+      city: '',
+      category: '',
+      body: '',
+      image: null,
+    });
+  };
+
   componentDidUpdate() {
     const {
       isPostNewsSuccess,
       isPostNewsFailed,
       alertMsgPostNews,
     } = this.props.news;
-    if (isPostNewsSuccess || isPostNewsFailed) {
+    if (isPostNewsSuccess) {
+      Toast.show({
+        text: alertMsgPostNews,
+        buttonText: 'Ok',
+        style: styles.toast,
+        duration: 3000,
+      });
+      this.props.clearMsg();
+      this.onResetState();
+    }
+    if (isPostNewsFailed) {
       Toast.show({
         text: alertMsgPostNews,
         buttonText: 'Ok',
@@ -69,7 +93,7 @@ export class PostNews extends Component {
     }
   }
   render() {
-    const {image} = this.state;
+    const {headline, city, category, body, image} = this.state;
     const {token} = this.props.auth;
     return (
       <ScrollView removeClippedSubviews={false}>
@@ -79,25 +103,34 @@ export class PostNews extends Component {
             <Text style={styles.title}>Create News</Text>
             <Formik
               initialValues={{
-                headline: '',
-                city: '',
-                category: '',
-                body: '',
+                headline: headline,
+                city: city,
+                category: category,
+                body: body,
               }}
               validationSchema={formSchema}
               onSubmit={async (values) => {
                 try {
                   const form = new FormData();
-                  form.append('headline', values.headline);
-                  form.append('city', values.city);
-                  form.append('category', values.category);
-                  form.append('body', values.body);
-                  form.append('image', {
-                    uri: image.uri,
-                    type: image.type,
-                    name: image.fileName,
-                  });
-                  await this.props.postNews(token, form);
+                  if (image) {
+                    form.append('headline', values.headline);
+                    form.append('city', values.city);
+                    form.append('category', values.category);
+                    form.append('body', values.body);
+                    form.append('image', {
+                      uri: image.uri,
+                      type: image.type,
+                      name: image.fileName,
+                    });
+                    await this.props.postNews(token, form);
+                  } else {
+                    Toast.show({
+                      text: 'Input image first',
+                      buttonText: 'Ok',
+                      style: styles.toast,
+                      duration: 3000,
+                    });
+                  }
                 } catch (e) {
                   console.log(e.message);
                 }
