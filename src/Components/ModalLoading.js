@@ -7,7 +7,7 @@ const ModalLoading = () => {
     <Modal visible={true} transparent={true}>
       <View style={styles.modalView}>
         <View style={styles.wrapperSpinner}>
-          <Spinner />
+          <Spinner color="green" />
           <Text>Loading</Text>
         </View>
       </View>

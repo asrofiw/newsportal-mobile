@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {View} from 'native-base';
 import {connect} from 'react-redux';
+import PushNotification from 'react-native-push-notification';
 
 // import action
 import newsAction from '../redux/actions/news';
@@ -9,6 +10,19 @@ import newsAction from '../redux/actions/news';
 // import Components
 import RenderCardListNews from '../Components/RenderCardListNews';
 import ModalLoading from '../Components/ModalLoading';
+
+// create Channel notifications
+PushNotification.createChannel(
+  {
+    channelId: 'income-news', // (required)
+    channelName: 'News', // (required)
+    channelDescription: 'This channel for income message', // (optional) default: undefined.
+    soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+    importance: 4, // (optional) default: 4. Int value of the Android notification importance
+    vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+  },
+  (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+);
 
 export class Home extends Component {
   state = {
@@ -28,6 +42,11 @@ export class Home extends Component {
 
   componentDidMount() {
     this.getData();
+    PushNotification.localNotification({
+      channelId: 'income-news',
+      title: 'Hallo',
+      message: 'Welcome to NewsPortal Application',
+    });
   }
 
   nextPage = async () => {
