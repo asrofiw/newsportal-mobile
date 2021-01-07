@@ -23,7 +23,7 @@ const RenderCardListNews = ({article}) => {
           <Text style={styles.category}>
             {article.category} |{' '}
             <Text style={styles.date}>
-              {moment.utc(article.date).local().startOf('seconds').fromNow()}
+              {moment.utc(article.createdAt).local().startOf('seconds').fromNow()}
             </Text>
           </Text>
         </View>

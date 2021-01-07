@@ -3,6 +3,7 @@ import {FlatList, StyleSheet} from 'react-native';
 import {View} from 'native-base';
 import {connect} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
+import moment from 'moment';
 
 // import action
 import newsAction from '../redux/actions/news';
@@ -65,7 +66,7 @@ export class Home extends Component {
 
   render() {
     const {dataAllNews, isLoading} = this.props.news;
-
+    console.log(dataAllNews)
     return (
       <View style={styles.parent}>
         {isLoading && <ModalLoading />}

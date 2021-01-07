@@ -79,7 +79,7 @@ export class MyArticles extends Component {
     return (
       <View style={styles.parent}>
         {isLoading && <ModalLoading />}
-        {articlesUser.length > 0 ? (
+        {articlesUser && articlesUser.length > 0 ? (
           <FlatList
             data={articlesUser}
             contentContainerStyle={styles.wrapperList}
