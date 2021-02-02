@@ -21,12 +21,19 @@ This is an article application where user can post an article and see other's ar
 
 ## Screenshot apps
 <div style="display: flex;flex-direction: row;flex-wrap: wrap">
-    <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/landing.png" alt="Landing-Page" width="170" height="300" />
-    <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/home.png" alt="Home" width="170" height="300" />
-    <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/news.png" alt="News" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/landing.png" alt="Landing-Page" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/home.png" alt="Home" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/news.png" alt="News" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/changepassword.png" alt="Change Password" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/editprofile.png" alt="Edit Profile" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/login.png" alt="Login" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/myarticles.png" alt="My Articles" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/postnews.png" alt="Post News" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/register.png" alt="Register" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/search.png" alt="Search" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/setting.png" alt="Setting" width="170" height="300" />
+  <img src="https://github.com/asrofiw/newsportal-mobile/blob/master/assets/images/scshot/splash.png" alt="Splash Screen" width="170" height="300" />
 </div>
 
 ## Ref Backend
-
-
 https://github.com/asrofiw/newsportal-backend.git
